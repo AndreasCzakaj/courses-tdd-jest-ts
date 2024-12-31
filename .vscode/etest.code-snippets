@@ -1,0 +1,19 @@
+{
+    "Single Jest Error Test": {
+        "scope": "javascript,typescript",
+        "prefix": "etest",
+        "body": [
+            "test('$name', async () => {",
+			"	// given",
+			"	const given = undefined;",
+			"	",
+			"	// when",
+			"	const action = async () => await service(given);",
+			"	",
+			"	// then",
+			"	expect(action).rejects.toThrow(new Error('oops'));",
+            "})",
+        ],
+        "description": "Create skeleton of a single jest test which expects an error"
+    }
+}

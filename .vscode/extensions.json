@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "vitest.explorer",
+    "selcuk-usta.code-complexity-report-generator",
+    "ampcpmgp.cognitive-complexity-show",
+    "omrigrossman.live-code-metric",
+  ]
+}

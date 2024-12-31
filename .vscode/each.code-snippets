@@ -1,0 +1,16 @@
+{
+    "Jest Test Skeleton": {
+        "scope": "javascript,typescript",
+        "prefix": "ptest",
+        "body": [
+            "test.each`",
+			"	given   | expected  | reason",
+			"	${'X'}  | ${'Y'}  	| ${'example'}",
+            "`('Parameterized: $$reason', ({given, expected}) => {",
+			"	const actual = service(given);",
+			"	expect(actual).toEqual(expected);",
+            "})",
+        ],
+        "description": "Create skeleton of a jest each test"
+    }
+}

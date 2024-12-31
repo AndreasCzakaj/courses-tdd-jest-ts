@@ -1,0 +1,75 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "runtimeVersion": "20",
+            "name": "debug ex01",
+            "cwd": "${workspaceFolder}/ex01",
+            "request": "launch",
+            "program": "./node_modules/.bin/vitest",
+            "args": [
+                "run"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
+        },
+        {
+            "type": "node",
+            "runtimeVersion": "20",
+            "name": "debug ex02-matchers",
+            "cwd": "${workspaceFolder}/ex02-matchers",
+            "request": "launch",
+            "program": "./node_modules/.bin/vitest",
+            "args": [
+                "run"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
+        },
+        {
+            "type": "node",
+            "runtimeVersion": "20",
+            "name": "debug ex11-fibonacci",
+            "cwd": "${workspaceFolder}/ex11-fibonacci",
+            "request": "launch",
+            "program": "./node_modules/.bin/vitest",
+            "args": [
+                "run"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
+        },
+        {
+            "type": "node",
+            "runtimeVersion": "20",
+            "name": "debug ex21-uss",
+            "cwd": "${workspaceFolder}/ex21-uss",
+            "request": "launch",
+            "program": "./node_modules/.bin/vitest",
+            "args": [
+                "run"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
+        }
+        {
+            "type": "node",
+            "runtimeVersion": "20",
+            "name": "debug ex32-uss-ui-lit",
+            "cwd": "${workspaceFolder}/ex32-uss-ui-lit",
+            "request": "launch",
+            "program": "./node_modules/.bin/vitest",
+            "args": [
+                "run"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true
+        }
+    ]
+}

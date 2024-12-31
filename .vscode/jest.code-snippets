@@ -1,0 +1,27 @@
+{
+    "Jest Test Skeleton": {
+        "scope": "javascript,typescript",
+        "prefix": "jest",
+        "body": [
+            "",
+            "describe('$TM_FILENAME_BASE', () => {",
+            "",
+            "  let service",
+            "",
+			"	beforeEach(() => {",
+			"	})",
+            "",
+            "",
+			"	test('init', () => {",
+			"		// given",
+			"		",
+			"		// when",
+			"		",
+			"		// then",
+			"		expect(service).not.toBe(undefined);",
+			"	})",
+            "})",
+        ],
+        "description": "Create skeleton of a jest test"
+    }
+}
