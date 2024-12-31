@@ -1,0 +1,37 @@
+{
+  "name": "toom",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run --coverage --dir=test",
+    "wtest": "vitest watch --dir=test",
+    "inttest": "vitest run --coverage --dir=test-int",
+    "winttest": "vitest watch --dir=test-int",
+    "citest": "vitest  run --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@types/jest": "^29.5.14",
+    "@vitest/coverage-istanbul": "^2.1.5",
+    "@vitest/coverage-v8": "^2.0.5",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-extended": "^4.0.2",
+    "mongodb": "^5.9.2",
+    "node": "^22.12.0",
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7",
+    "stream": "^0.0.3",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb-memory-server": "^9.4.1",
+    "node-fetch": "^3.3.2"
+  }
+}

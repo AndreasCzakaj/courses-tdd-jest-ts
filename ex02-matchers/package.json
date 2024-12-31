@@ -1,0 +1,21 @@
+{
+  "name": "toom",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run --coverage",
+    "wtest": "vitest watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@vitest/coverage-istanbul": "^2.1.5",
+    "@vitest/coverage-v8": "^2.0.5",
+    "jest-extended": "^4.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}
