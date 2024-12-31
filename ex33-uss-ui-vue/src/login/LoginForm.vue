@@ -37,6 +37,7 @@
 
 <script lang="ts">
 
+import type { RefSymbol } from "@vue/reactivity"
 import { computed, defineComponent, ref, watch} from 'vue';
 
 export default defineComponent({
@@ -44,7 +45,7 @@ export default defineComponent({
   setup() {
     
     const username = ref("")
-    let usernameIsTainted = false
+    const usernameIsTainted = ref(false)
     const usernameError = ref("")
     const usernameLabel = "Username"
     const usernamePlaceholder = ref("Enter your username")
@@ -54,7 +55,7 @@ export default defineComponent({
     })
 
     const validateUsername = () => {
-      if (usernameIsTainted && !username.value.trim()) {
+      if (usernameIsTainted.value && !username.value.trim()) {
         usernameError.value = "Username is required."
         return false
       }
@@ -63,12 +64,12 @@ export default defineComponent({
     }
 
     const touchUsername = () => {
-      usernameIsTainted = true
+      usernameIsTainted.value = true
       validateUsername()
     }
     
     const password = ref("")
-    let passwordIsTainted = false
+    const passwordIsTainted = ref(false)
     const passwordError = ref("")
     const passwordLabel = "Password"
     const passwordPlaceholder = "Enter your password"
@@ -78,7 +79,7 @@ export default defineComponent({
     })
 
     const validatePassword = () => {
-      if (passwordIsTainted && !password.value.trim()) {
+      if (passwordIsTainted.value && !password.value.trim()) {
         passwordError.value = "Password is required."
         return false
       }
@@ -87,7 +88,7 @@ export default defineComponent({
     }
 
     const touchPassword = () => {
-      passwordIsTainted = true
+      passwordIsTainted.value = true
       validatePassword()
     }
 
@@ -100,8 +101,8 @@ export default defineComponent({
     // Check if the form is valid
     const ctaDisabled = computed(() => {
       const tainted: boolean[] = [
-        usernameIsTainted,
-        passwordIsTainted,
+        usernameIsTainted.value,
+        passwordIsTainted.value,
       ]
       return tainted.every((v) => v === false) || !validate()
     })
