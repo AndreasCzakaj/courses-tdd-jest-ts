@@ -10,7 +10,7 @@
         :placeholder="usernamePlaceholder"
         @blur="touchUsername"
       />
-      <div id="usernameError" v-if="usernameError" class="error">
+      <div id="usernameError" v-if="showUsernameError" class="error">
         {{ usernameError }}
       </div>
     </div>
@@ -24,7 +24,7 @@
         :placeholder="passwordPlaceholder"
         @blur="touchPassword"
       />
-      <div id="passwordError" v-if="passwordError" class="error">
+      <div id="passwordError" v-if="showPasswordError" class="error">
         {{ passwordError }}
       </div>
     </div>
@@ -37,99 +37,23 @@
 
 <script lang="ts">
 
-import type { RefSymbol } from "@vue/reactivity"
-import { computed, defineComponent, ref, watch} from 'vue';
+import { defineComponent} from 'vue';
+import { createLoginFormModel } from './LoginModel';
 
 export default defineComponent({
   name: 'LoginForm',
+  /* props: {
+    loginForm: {
+      type: Object as PropType<ReturnType<typeof createLoginFormModel>>,
+      required: true,
+    },
+  },
+  setup(props) {
+    return {...props.loginForm}
+  }, */
   setup() {
-    
-    const username = ref("")
-    const usernameIsTainted = ref(false)
-    const usernameError = ref("")
-    const usernameLabel = "Username"
-    const usernamePlaceholder = ref("Enter your username")
-
-    watch(username, (n: string, o: string) => {
-      touchUsername()
-    })
-
-    const validateUsername = () => {
-      if (usernameIsTainted.value && !username.value.trim()) {
-        usernameError.value = "Username is required."
-        return false
-      }
-      usernameError.value = ""
-      return true
-    }
-
-    const touchUsername = () => {
-      usernameIsTainted.value = true
-      validateUsername()
-    }
-    
-    const password = ref("")
-    const passwordIsTainted = ref(false)
-    const passwordError = ref("")
-    const passwordLabel = "Password"
-    const passwordPlaceholder = "Enter your password"
-
-    watch(password, (n: string, o: string) => {
-      touchPassword()
-    })
-
-    const validatePassword = () => {
-      if (passwordIsTainted.value && !password.value.trim()) {
-        passwordError.value = "Password is required."
-        return false
-      }
-      passwordError.value = ""
-      return true
-    }
-
-    const touchPassword = () => {
-      passwordIsTainted.value = true
-      validatePassword()
-    }
-
-
-    const validate = () => {
-      const out: boolean[] = [validateUsername(), validatePassword()]
-      return out.every((v) => v === true)
-    }
-
-    // Check if the form is valid
-    const ctaDisabled = computed(() => {
-      const tainted: boolean[] = [
-        usernameIsTainted.value,
-        passwordIsTainted.value,
-      ]
-      return tainted.every((v) => v === false) || !validate()
-    })
-
-    // Handle the "Login" submission
-    const handleCta = () => {
-      if (validate()) {
-        console.log("Logging in with", username.value, password.value)
-        // ... your login API call or logic here
-      }
-    }
-
     return {
-      username,
-      usernameError,
-      usernameLabel,
-      usernamePlaceholder,
-      touchUsername,
-
-      password,
-      passwordError,
-      passwordLabel,
-      passwordPlaceholder,
-      touchPassword,
-
-      ctaDisabled,
-      handleCta,
+      ...createLoginFormModel(),
     }
   },
 });
