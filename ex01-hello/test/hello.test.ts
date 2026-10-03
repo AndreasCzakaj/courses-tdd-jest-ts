@@ -1,14 +1,10 @@
 import { hello, getValue, getList, getObject } from "@src/hello"
 
 describe("covered test", () => {
-  test("hello", () => {
-    expect(hello).toEqual("friends")
-    expect(hello).toBe("friends")
-  })
-
-  it.skip("should yield the answer", () => {
+  it("should yield 42 for the ultimate question", () => {
     // given
-    const input = "What's the meaning of it all?"
+    const input =
+      "What is the answer to the Ultimate Question of Life, the Universe, and Everything?"
 
     // when
     const actual = getValue(input)
@@ -17,6 +13,11 @@ describe("covered test", () => {
     const expected = 42
     expect(actual).toEqual(expected)
     expect(actual).toBe(expected)
+  })
+
+  test("hello", () => {
+    expect(hello).toEqual("friends")
+    expect(hello).toBe("friends")
   })
 
   it.skip("should match the list items", () => {

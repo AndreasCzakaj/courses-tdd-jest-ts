@@ -1,7 +1,7 @@
 export const hello = "friends"
 
 export function getValue(question: string) {
-  return 42
+  return 43
 }
 
 export function getList() {

@@ -22,4 +22,16 @@ describe("arrays test", () => {
   it.todo(
     "should verify that getList yields an array that includes 'a' and 'c' "
   )
+
+  it.todo(
+    "should verify that getList yields an array that does not include 'd'"
+  )
+
+  it.todo("should verify that getList yields an array without duplicates")
+
+  it.todo(
+    "should verify that getList is precisely a, b, c but also loosely c, a, b"
+  )
+
+  it.todo("toBe vs. toEqual: same or equal?")
 })

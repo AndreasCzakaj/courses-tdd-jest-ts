@@ -23,4 +23,10 @@ describe("strings.test", () => {
   )
 
   it.todo("should verify that `mycolor` is hexadecimal")
+
+  it.todo("should verify all of the above in 1 expression")
+
+  it.todo(
+    "should not exit at the 1st failure: soft assertions (Vitest only, tip: `expect.soft`)"
+  )
 })
