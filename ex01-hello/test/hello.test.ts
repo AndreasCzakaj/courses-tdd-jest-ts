@@ -1,14 +1,10 @@
 import { hello, getValue, getList, getObject } from "@src/hello"
 
 describe("covered test", () => {
-  test("hello", () => {
-    expect(hello).toEqual("friends")
-    expect(hello).toBe("friends")
-  })
-
-  it.skip("should yield the answer", () => {
+  it("should yield 42 for the ultimate question", () => {
     // given
-    const input = "What's the meaning of it all?"
+    const input =
+      "What is the answer to the Ultimate Question of Life, the Universe, and Everything?"
 
     // when
     const actual = getValue(input)
@@ -19,7 +15,12 @@ describe("covered test", () => {
     expect(actual).toBe(expected)
   })
 
-  it.skip("should match the list items", () => {
+  test("hello", () => {
+    expect(hello).toEqual("friends")
+    expect(hello).toBe("friends")
+  })
+
+  it("should match the list items", () => {
     // when
     const actual = getList()
 
@@ -28,5 +29,17 @@ describe("covered test", () => {
     expect(actual).toEqual(expected)
   })
 
-  it.todo("should yield the test user from `getObject`")
+  it("should yield the test user from `getObject`", () => {
+    // when
+    const actual = getObject()
+
+    // then
+    const expected = {
+      firstName: "Joey",
+      lastName: "Ramone",
+    }
+    // toEqual compares by value, toBe would compare identity (===)
+    expect(actual).toEqual(expected)
+    expect(actual).not.toBe(expected)
+  })
 })
