@@ -2,6 +2,10 @@ import {
   UuidGenerator,
   UuidGeneratorNaiveRandomImpl,
 } from "@src/funwithflags/uuidGenerator"
+import {
+  UuidGeneratorUpperCaseDecoratorImpl,
+  UuidGeneratorWithDashesDecoratorImpl,
+} from "@src/funwithflags/uuidGeneratorDecorators"
 
 describe("uuidGenerator.test", () => {
   const baseImpl: UuidGenerator = new UuidGeneratorNaiveRandomImpl()
@@ -12,9 +16,23 @@ describe("uuidGenerator.test", () => {
       expected: /^[a-f0-9]{32}$/,
       info: "lower case, no dashes",
     },
-    // { uuidGenerator: new ???, expected: /^[A-F0-9]{32}$/, info: "upper case, no dashes" },
-    // { uuidGenerator: new ???, expected: /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/, info: "lower case, with dashes" },
-    // { uuidGenerator: new ???, expected: /^[A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12}$/, info: "upper case, with dashes" },
+    {
+      uuidGenerator: new UuidGeneratorUpperCaseDecoratorImpl(baseImpl),
+      expected: /^[A-F0-9]{32}$/,
+      info: "upper case, no dashes",
+    },
+    {
+      uuidGenerator: new UuidGeneratorWithDashesDecoratorImpl(baseImpl),
+      expected: /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/,
+      info: "lower case, with dashes",
+    },
+    {
+      uuidGenerator: new UuidGeneratorWithDashesDecoratorImpl(
+        new UuidGeneratorUpperCaseDecoratorImpl(baseImpl)
+      ),
+      expected: /^[A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12}$/,
+      info: "upper case, with dashes",
+    },
   ])(
     "should match pattern $expected for case: $info",
     ({ uuidGenerator, expected }) => {
