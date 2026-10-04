@@ -1,6 +1,6 @@
-import { getPort } from "@src/cnn"
+import { getPort } from "@src/ccn"
 
-describe("cnn.test", () => {
+describe("ccn.test", () => {
   it.each`
     given        | expected | reason
     ${undefined} | ${8080}  | ${"Env param not set"}

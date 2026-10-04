@@ -1,7 +1,7 @@
-import { getPort2 } from "@src/cnn"
+import { getPort2 } from "@src/ccn"
 
 // the nested variant must behave exactly like `getPort`, see cnn.test.ts
-describe("cnn.getPort2.test", () => {
+describe("ccn.getPort2.test", () => {
   it.each`
     given        | expected | reason
     ${undefined} | ${8080}  | ${"Env param not set"}
