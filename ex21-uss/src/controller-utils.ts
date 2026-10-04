@@ -3,7 +3,7 @@ import { ValidationError } from "./validation"
 
 export const CONTENT_TYPE_JSON = "application/json"
 
-export function calcHttpErrorCode(e) {
+export function calcHttpErrorCode(e: unknown): number {
   if (e instanceof UserError || e instanceof ValidationError) {
     return 400
   }

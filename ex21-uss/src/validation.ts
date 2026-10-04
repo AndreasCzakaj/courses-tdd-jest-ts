@@ -1,5 +1,5 @@
 export class ValidationError extends Error {
-  constructor(fields: Record<string, string>) {
+  constructor(fields: string[]) {
     super(JSON.stringify(fields))
   }
 }

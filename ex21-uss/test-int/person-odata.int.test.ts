@@ -1,19 +1,21 @@
+import { Server } from "node:http"
 import { ProviderError } from "../src/Provider"
 import { ProviderNodeFetchImpl } from "../src/ProviderNodeFetchImpl"
-import { runServer } from "./http-server.js"
+import { PersonOdata } from "../src/user-self-service"
+import { runServer } from "./http-server"
 
 describe("PersonOdataNodeFetchImpl", () => {
-  let provider
+  let provider: ProviderNodeFetchImpl<PersonOdata>
   const port = 3001
 
   beforeEach(async () => {
-    provider = new ProviderNodeFetchImpl({
+    provider = new ProviderNodeFetchImpl<PersonOdata>({
       baseUrl: `http://localhost:${port}/People`,
     })
   })
 
   describe("with server", () => {
-    let server
+    let server: Server | undefined
 
     beforeAll(async () => {
       server = await runServer(port)

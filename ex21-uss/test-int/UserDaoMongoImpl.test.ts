@@ -5,10 +5,17 @@ import { UserDaoMongoImpl } from "../src/DaoMongoImpl"
 import { DaoError } from "../src/Dao"
 
 describe("UserDaoMongoImpl.test", () => {
-  let mongodb
-  let uri
-  let client
-  let dao
+  let mongodb: MongoMemoryServer
+  let uri: string
+  let client: MongoClient
+  let dao: UserDaoMongoImpl
+
+  const createUser = (username: string): User => ({
+    username,
+    password: "pa55w0rd",
+    status: "new",
+    emails: [],
+  })
 
   describe("OK", () => {
     beforeAll(async () => {
@@ -32,11 +39,10 @@ describe("UserDaoMongoImpl.test", () => {
     test("cycle OK", async () => {
       // given
       const username = "testuser"
-      const user2Add: User = {
-        username,
-      }
+      const user2Add = createUser(username)
 
-      expect(await dao.get(username)).toBe(undefined)
+      // "not found" is `null`, see the `Dao` interface
+      expect(await dao.get(username)).toBe(null)
 
       const userAfterSave = await dao.save(username, user2Add)
       expect(userAfterSave.username).toEqual(username)
@@ -44,7 +50,7 @@ describe("UserDaoMongoImpl.test", () => {
       const user = await dao.get(username)
       expect(user).not.toBe(undefined)
       expect(user).not.toBe(null)
-      expect(user.username).toEqual(user2Add.username)
+      expect(user?.username).toEqual(user2Add.username)
     })
   })
 
@@ -82,9 +88,7 @@ describe("UserDaoMongoImpl.test", () => {
     test("save error", async () => {
       // given
       const username = "testuser"
-      const user2Add: User = {
-        username,
-      }
+      const user2Add = createUser(username)
 
       await expect(() =>
         dao.save(username, user2Add)
