@@ -1,0 +1,29 @@
+{
+    "@odata.context": "https://services.odata.org/TripPinRESTierService/(S(3mslpb2bc0k5ufk24olpghzx))/$metadata#People/$entity",
+    "UserName": "russellwhyte",
+    "FirstName": "Russell",
+    "LastName": "Whyte",
+    "MiddleName": null,
+    "Gender": "Male",
+    "Age": null,
+    "Emails": [
+        "Russell@example.com",
+        "Russell@contoso.com"
+    ],
+    "FavoriteFeature": "Feature1",
+    "Features": [
+        "Feature1",
+        "Feature2"
+    ],
+    "AddressInfo": [
+        {
+            "Address": "187 Suffolk Ln.",
+            "City": {
+                "Name": "Boise",
+                "CountryRegion": "United States",
+                "Region": "ID"
+            }
+        }
+    ],
+    "HomeAddress": null
+}
