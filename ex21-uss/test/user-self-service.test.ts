@@ -1,7 +1,11 @@
-describe("user-self-service.test", () => {
-  let service
+import { UserSelfService } from "../src/user-self-service"
 
-  beforeEach(() => {})
+describe("user-self-service.test", () => {
+  let service: UserSelfService | undefined
+
+  beforeEach(() => {
+    // ToDo: create the service. Building blocks for its dependencies: see test-utils
+  })
 
   test("init", () => {
     expect(service).not.toBe(undefined)

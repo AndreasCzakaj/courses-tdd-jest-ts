@@ -1,35 +1,41 @@
-import { MongoClient } from "mongodb"
+import {
+  Collection,
+  Document,
+  Filter,
+  MongoClient,
+  OptionalUnlessRequiredId,
+} from "mongodb"
 import { DaoError, Dao } from "./Dao"
 import { User } from "./user-self-service"
-import { Identifier } from "../../ex02-matchers/node_modules/@babel/types/lib/index-legacy.d"
 
-export class DaoMongoImpl<T> implements Dao<T> {
+export class DaoMongoImpl<T extends Document> implements Dao<T> {
+  private readonly collection: Collection<T>
+
   constructor(
     mongoClient: MongoClient,
-    private identifierQueryProvider: (
-      identifier: string
-    ) => Record<string, string>
+    private readonly identifierQueryProvider: (identifier: string) => Filter<T>,
+    collectionName: string
   ) {
     const database = mongoClient.db()
-    this.collection = database.collection("users")
+    this.collection = database.collection<T>(collectionName)
   }
-
-  private collection
 
   async get(identifier: string): Promise<T | null> {
     const query = this.identifierQueryProvider(identifier)
 
     try {
-      return await this.collection.findOne(query)
+      return (await this.collection.findOne(query)) as T | null
     } catch (e) {
       //console.warn("get: Mongo Error", e)
       throw new DaoError("Mongo Error", e)
     }
   }
 
-  async save(identifier: string, object: T) {
+  async save(_identifier: string, object: T): Promise<T> {
     try {
-      const out = await this.collection.insertOne(object)
+      const out = await this.collection.insertOne(
+        object as OptionalUnlessRequiredId<T>
+      )
       return { ...object, insertedId: out.insertedId }
     } catch (e) {
       //console.warn("get: Mongo Error", e)
@@ -38,12 +44,9 @@ export class DaoMongoImpl<T> implements Dao<T> {
   }
 }
 
+// a specific implementation of the generic one
 export class UserDaoMongoImpl extends DaoMongoImpl<User> {
   constructor(mongoClient: MongoClient) {
-    super(mongoClient, (identifier) => {
-      return {
-        username: identifier,
-      }
-    })
+    super(mongoClient, (identifier) => ({ username: identifier }), "users")
   }
 }

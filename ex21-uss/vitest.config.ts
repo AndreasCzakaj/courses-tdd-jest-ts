@@ -1,8 +1,9 @@
-import path from "path"
+import path from "node:path"
+import { defineConfig } from "vitest/config"
 
-export default {
+export default defineConfig({
   test: {
-    setupFiles: ["./testSetup.js"],
+    setupFiles: ["./testSetup.ts"],
     globals: true,
     environment: "node",
     coverage: {
@@ -16,4 +17,4 @@ export default {
       "@test": path.resolve(__dirname, "./test"),
     },
   },
-}
+})

@@ -1,17 +1,17 @@
 import { ProviderNodeFetchImpl } from "../src/ProviderNodeFetchImpl"
+import { PersonOdata } from "../src/user-self-service"
 
-describe("with server", () => {
-  let provider: ProviderNodeFetchImpl<any>
+describe("ProviderNodeFetchImpl", () => {
+  let provider: ProviderNodeFetchImpl<PersonOdata>
   const port = 3001
 
-  beforeEach(async () => {
-    const opts = {
-      baseUrl: `http://localhost:${port}`,
-    }
-    provider = new ProviderNodeFetchImpl(opts)
+  beforeEach(() => {
+    provider = new ProviderNodeFetchImpl<PersonOdata>({
+      baseUrl: `http://localhost:${port}/People`,
+    })
   })
 
-  test.skip("calcUrl", () => {
+  test("calcUrl", () => {
     // given
     const given = "123"
 

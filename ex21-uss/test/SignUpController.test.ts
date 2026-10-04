@@ -1,16 +1,18 @@
 import { SignUpController } from "../src/SignUpController"
-import { DaoThrowingImpl } from "../src/Dao"
+import { UserSelfService } from "../src/user-self-service"
 import { createResponseFake } from "./test-utils"
-import { CONTENT_TYPE_JSON } from "../../ex21-uss-solution/src/LoginController"
 
 describe("SignUpController.test", () => {
-  let service
-  let ctrl
+  let service: UserSelfService
+  let ctrl: SignUpController
 
   beforeEach(() => {
-    //service = createUserSelfServiceWithWorkingDeps()
+    // ToDo: create the service with working dependencies, see test-utils
+    service = new UserSelfService()
     ctrl = new SignUpController(service)
   })
+
+  // Tip: `createResponseFake()` records what the controller does with the response
 
   test.todo("400")
 

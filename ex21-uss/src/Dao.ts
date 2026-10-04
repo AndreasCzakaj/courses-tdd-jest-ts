@@ -1,3 +1,6 @@
+// A generic interface on purpose: the service is isolated from the database,
+// and the implementations are interchangeable.
+// If needed, there can be specific implementations, see `UserDaoMongoImpl`.
 export interface Dao<T> {
   get(identifier: string): Promise<T | null>
 
@@ -5,15 +8,15 @@ export interface Dao<T> {
 }
 
 export class DaoError extends Error {
-  constructor(message: string, cause?: Error) {
+  constructor(message: string, cause?: unknown) {
     super(message, { cause })
   }
 }
 
 export class DaoDictionaryImpl<T> implements Dao<T> {
-  constructor(private repo: Record<string, T> = {}) {}
+  constructor(private readonly repo: Record<string, T> = {}) {}
 
-  async get(identifier): Promise<T | null> {
+  async get(identifier: string): Promise<T | null> {
     return this.repo[identifier] || null
   }
 
@@ -24,13 +27,11 @@ export class DaoDictionaryImpl<T> implements Dao<T> {
 }
 
 export class DaoThrowingImpl<T> implements Dao<T> {
-  constructor() {}
-
-  async get(identifier): Promise<T | null> {
+  async get(_identifier: string): Promise<T | null> {
     throw new DaoError("get: oops")
   }
 
-  async save(identifier: string, object: T): Promise<T> {
+  async save(_identifier: string, _object: T): Promise<T> {
     throw new DaoError("save: oops")
   }
 }
