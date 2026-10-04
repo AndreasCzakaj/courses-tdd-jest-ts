@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest run --coverage",
-    "wtest": "vitest watch"
+    "wtest": "vitest watch",
+    "build": "vite build --ssr src/main.ts --outDir dist"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "jest-extended": "^4.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
+    "vite": "^5.4.21",
     "vitest": "^2.0.5"
   }
 }
