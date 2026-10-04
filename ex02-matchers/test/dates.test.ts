@@ -6,6 +6,7 @@ import {
   getWorkStart,
   getProjectDeadline,
 } from "@src/dates"
+import "./dateMatchers"
 
 // matchers marked with (*) come from the library `jest-extended`
 
@@ -37,18 +38,30 @@ describe("dates.test", () => {
     expect(birthday).toBeAfter(new Date(1980, 0, 1)) // (*)
   })
 
+  // There are no native matchers for the parts of a date (year, month, day),
+  // neither in vitest / jest nor in `jest-extended`.
+  // (a) own custom matchers, see `dateMatchers.ts`: `expect()` only takes the actual value
+  // (b) a range with `toBeBetween`, if a range says what you mean
+  // (c) ugly: pick the part yourself, so `expect()` gets a derived value
+  //     => the failure message only talks about numbers, not about the date
   it("birthday should be in May", () => {
-    // months are 0-based!
+    expect(birthday).toBeInMonth(5) // (a) 1-based!
+    // (b) says more than asked for: "in May 1990"
+    expect(birthday).toBeBetween(new Date(1990, 4, 1), new Date(1990, 4, 31)) // (*)
+    // (c) months are 0-based!
     expect(birthday.getMonth()).toBe(4)
     expect(birthday.toLocaleString("en", { month: "long" })).toBe("May")
   })
 
   it("birthday should be in year 1990", () => {
-    expect(birthday.getFullYear()).toBe(1990)
+    expect(birthday).toBeInYear(1990) // (a)
+    expect(birthday).toBeBetween(new Date(1990, 0, 1), new Date(1990, 11, 31)) // (b) (*)
+    expect(birthday.getFullYear()).toBe(1990) // (c)
   })
 
   it("birthday should be on day 15", () => {
-    // getDate() is the day of the month, getDay() is the day of the week!
+    expect(birthday).toBeOnDayOfMonth(15) // (a)
+    // (c) getDate() is the day of the month, getDay() is the day of the week!
     expect(birthday.getDate()).toBe(15)
   })
 
