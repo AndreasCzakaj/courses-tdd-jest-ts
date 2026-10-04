@@ -32,19 +32,4 @@ expect.extend({
   },
 })
 
-// make TypeScript (and your IDE) aware of the new matchers
-interface FileMatchers<R = unknown> {
-  toExist(): R
-  toContainLine(expected: string): R
-}
-
-declare module "vitest" {
-  interface Assertion<T = any> extends FileMatchers<T> {}
-  interface AsymmetricMatchersContaining extends FileMatchers {}
-}
-
-declare global {
-  namespace jest {
-    interface Matchers<R> extends FileMatchers<R> {}
-  }
-}
+// The types of the new matchers, for TypeScript and your IDE: see fileMatchers.types.d.ts
