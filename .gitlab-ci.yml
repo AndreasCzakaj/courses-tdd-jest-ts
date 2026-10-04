@@ -1,0 +1,106 @@
+# GitLab CI/CD pipeline: lint -> test -> build -> package
+# Every stage must be green before the next one starts.
+
+stages:
+  - lint
+  - test
+  - build
+  - package
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  IMAGE_NAME: "tdd-jest-ts"
+  # the exercise that contains the "app"
+  APP: "ex12-misc"
+
+# shared by the Node.js jobs
+.node:
+  image: node:20
+  cache:
+    paths:
+      - .npm
+  before_script:
+    - node --version
+
+# Linter + metrics: likely bugs, TypeScript rules, cyclomatic complexity (CCN <= 5)
+# The rules are configured in eslint.config.js. Any violation breaks the build.
+lint:
+  extends: .node
+  stage: lint
+  script:
+    - npm ci
+    - npm run lint
+
+# All tests, with coverage: 1 job per exercise, in parallel.
+# Less than 90% coverage breaks the build.
+test:
+  extends: .node
+  stage: test
+  parallel:
+    matrix:
+      - EXERCISE: [ex01-hello, ex02-matchers, ex11-fibonacci, ex12-misc]
+  script:
+    - cd "$EXERCISE"
+    - npm ci
+    - >
+      npx vitest run
+      --coverage --coverage.reporter=text --coverage.reporter=cobertura
+      --coverage.thresholds.lines=90 --coverage.thresholds.functions=90
+      --coverage.thresholds.branches=90 --coverage.thresholds.statements=90
+      --reporter=default --reporter=junit --outputFile.junit=report.xml
+  # GitLab reads the total coverage from the job log ...
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    when: always
+    reports:
+      # ... shows the test results in the merge request ...
+      junit: $EXERCISE/report.xml
+      # ... and the covered lines in the diff
+      coverage_report:
+        coverage_format: cobertura
+        path: $EXERCISE/coverage/cobertura-coverage.xml
+
+# Bundle the "app" with Vite. The bundle is handed over to the next stage as artifact.
+build:
+  extends: .node
+  stage: build
+  script:
+    - cd "$APP"
+    - npm ci
+    - npm run build
+    # smoke test: the bundle must start and print a UUID
+    - node dist/main.js
+  artifacts:
+    paths:
+      - $APP/dist/
+
+# Build the Docker image of the "app" and check that it starts.
+# Needs a runner that supports Docker-in-Docker (gitlab.com: works out of the box).
+docker:
+  stage: package
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  # uses the bundle of the job "build"
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - docker build -f "$APP/Dockerfile.app" -t "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA" "$APP"
+    # smoke test: the container must start and print a UUID
+    - docker run --rm "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+    # Push the image to Docker Hub.
+    # To enable: define DOCKERHUB_USER and DOCKERHUB_TOKEN (masked!) in
+    # Settings > CI/CD > Variables, then remove the comments.
+    # NEVER put the token into this file.
+    # - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
+    # - docker tag "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA" "$DOCKERHUB_USER/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+    # - docker tag "$IMAGE_NAME:$CI_COMMIT_SHORT_SHA" "$DOCKERHUB_USER/$IMAGE_NAME:latest"
+    # - docker push "$DOCKERHUB_USER/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+    # - docker push "$DOCKERHUB_USER/$IMAGE_NAME:latest"
+  # only build images from the default branch and the solution branch
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "solution"

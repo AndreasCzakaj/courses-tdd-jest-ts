@@ -1,0 +1,16 @@
+{
+  "name": "tdd-jest-ts-tools",
+  "version": "1.0.0",
+  "description": "Tooling for the whole repo: linter. The exercises are independent projects in their own folders.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint ex01-hello ex02-matchers ex11-fibonacci ex12-misc"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.0"
+  }
+}

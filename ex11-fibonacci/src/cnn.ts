@@ -8,8 +8,7 @@ function getPort(envProvider: () => string) {
   return isNaN(num) ? 8080 : num
 }
 
-export { getPort }
-
+// the same logic, but nested: compare the readability
 function getPort2(envProvider: () => string) {
   let out
 
@@ -25,3 +24,5 @@ function getPort2(envProvider: () => string) {
 
   return out
 }
+
+export { getPort, getPort2 }
