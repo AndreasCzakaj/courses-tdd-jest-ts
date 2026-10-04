@@ -8,7 +8,8 @@
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
@@ -19,6 +20,6 @@
       "@src/*": ["src/*"],
       "@test/*": ["test/*"]
     },
-    "types": ["jest"]
+    "types": ["node", "vitest/globals"]
   }
 }
