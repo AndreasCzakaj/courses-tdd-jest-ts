@@ -4,10 +4,13 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "test": "vitest run --coverage",
-    "wtest": "vitest watch",
+    "test": "vitest run --coverage --dir=test",
+    "wtest": "vitest watch --dir=test",
+    "inttest": "vitest run --coverage --dir=test-int",
+    "winttest": "vitest watch --dir=test-int",
+    "citest": "vitest run --coverage",
     "build": "vite build --ssr src/main.ts --outDir dist",
-    "uss": "vite-node src/uss-dirty/dev.ts"
+    "uss": "vite-node src/uss/dev.ts"
   },
   "author": "",
   "license": "ISC",

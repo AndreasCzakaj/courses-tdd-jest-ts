@@ -1,4 +1,5 @@
 import path from "path"
+import { coverageConfigDefaults } from "vitest/config"
 
 export default {
   test: {
@@ -8,6 +9,8 @@ export default {
     coverage: {
       //provider: "istanbul",
       provider: "v8",
+      // dev.ts: starts the app for local use, not part of the app
+      exclude: [...coverageConfigDefaults.exclude, "src/uss/dev.ts"],
     },
   },
   resolve: {
