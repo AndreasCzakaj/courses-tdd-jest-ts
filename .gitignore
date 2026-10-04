@@ -54,3 +54,7 @@ Thumbs.db
 
 # CI reports
 report.xml
+
+# Drafts
+ex31-ui-lit/
+ex32-uss-ui-lit/
