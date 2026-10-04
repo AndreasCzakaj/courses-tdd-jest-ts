@@ -10,7 +10,6 @@ describe("strings.test", () => {
   })
 
   it("should verify that `myemail` starts with andreas", () => {
-    expect(myemail.startsWith("andreas")).toBe(true)
     expect(myemail).toMatch(/^andreas/)
     // better: says what it does, and gives a helpful message when it fails
     expect(myemail).toStartWith("andreas") // (*)
