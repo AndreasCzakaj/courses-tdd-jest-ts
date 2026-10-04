@@ -39,6 +39,7 @@ Thumbs.db
 
 # Applications
 *.app
+!Dockerfile.app
 *.exe
 *.war
 
