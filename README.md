@@ -4,6 +4,8 @@ This repo contains separate independent project folders.
 
 Branch `main` contains the exercises. Branch `solution` contains the solutions for `ex01-hello`, `ex02-matchers`, `ex11-fibonacci` and `ex12-misc`.
 
+`ex12-misc` also contains the legacy code task "User Self Service: Login": `src/uss-dirty` on `main`, the refactored and tested solution in `src/uss` on `solution`.
+
 # CI/CD
 
 `.gitlab-ci.yml` defines the GitLab pipeline for the exercises `ex01-hello`, `ex02-matchers`, `ex11-fibonacci` and `ex12-misc`:
@@ -15,5 +17,5 @@ lint => test => build => package
 * **build**: bundles the "app" of `ex12-misc` with Vite: `npm run build`
 * **package**: builds the Docker image of the "app" (`ex12-misc/Dockerfile.app`), which prints a UUID
 
-On branch `main`, the pipeline is RED by design: the first test must fail.
+On branch `main`, the pipeline is RED by design: the linter rejects the legacy code in `ex12-misc/src/uss-dirty` (complexity), and the first test must fail.
 On branch `solution` it is GREEN.
