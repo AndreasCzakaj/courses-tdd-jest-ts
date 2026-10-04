@@ -1,8 +1,8 @@
-import type CustomMatchers from 'jest-extended';
-import 'vitest';
+// make TypeScript (and your IDE) aware of the matchers of the library `jest-extended`
+/// <reference types="jest-extended" />
+import "vitest"
 
-declare module 'vitest' {
+declare module "vitest" {
   interface Assertion<T = any> extends CustomMatchers<T> {}
-  interface AsymmetricMatchersContaining<T = any> extends CustomMatchers<T> {}
-  interface ExpectStatic<T = any> extends CustomMatchers<T> {}
+  interface AsymmetricMatchersContaining extends CustomMatchers<any> {}
 }
